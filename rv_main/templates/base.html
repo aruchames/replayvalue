@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link rel="icon" type="image/jpg" href="{% static 'shared/img/icon.jpg' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Replay Value">
+    <title>Replay Value</title>
+    
+    <!--- Bootstrap + custom css -->
+    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='{% static "shared/css/style.css" %}' rel ='stylesheet'>
+    
+    {% block owncss %}
+    {% endblock owncss %}
+  </head>
+
+  <body>
+    {% block content %}
+    <p>This is default content</p>
+    {% endblock content %}
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+
+    {% block ownjavascript %}
+    {% endblock ownjavascript %}
+
+  </body>
+</html>
