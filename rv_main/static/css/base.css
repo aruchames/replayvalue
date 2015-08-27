@@ -1,5 +1,14 @@
-p{
-    align-text:center;
-    font-face:helvetica;
-    font-size:14pt;
+body{
+    background-color:#000000;
+    color:#FFFFFF;
+}
+
+.navbar-default {
+    background-color:#000000;
+    border-color:#101010;
+}
+
+.start {
+    background-color:#4C0000;
+    color:#FFFFFF;
 }

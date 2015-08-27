@@ -1,10 +1,52 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
 {% block content %}
-<header class="visible-lg visible-md visible-sm visible-xs ">
-  <div class="header-content wrapper">
-    <div class="header-content-inner">
+<header class="visible-lg visible-md visible-sm visible-xs header">
+  <div class="header-content wrapper header-bg">
+    <div class="header-content-inner text-center">
       <h3>Replay Value</h3>
+      <h1></h1>
+      <p>Tired of the same old shit? Well fuck that shit. Do our shit instead!</p>
+      <a href="#start" class="btn btn-xl start">Get Started!</a>
     </div>
   </div>
 </header>
+
+
+<section id="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading">Cool Stuff</h2>
+        <hr class="primary">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 text-center">
+        <div class="service-box">
+          <i class="fa fa-4x fa-list wow bounceIn text-primary"></i>
+          <h3>Build your Map!</h3>
+          <p class="text-muted">Tell us what games you love and import your Steam library and data in order to see how the games you love are related.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 text-center">
+        <div class="service-box">
+          <i class="fa fa-4x fa-user wow bounceIn text-primary" data-wow-delay=".1s"></i>
+          <h3>Expand your Map!</h3>
+          <p class="text-muted">Our unique algorithm will help you find new games that you want to play and slowly expand your map to include those games that are similar or not similar to the ones you already play</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 text-center">
+        <div class="service-box">
+          <i class="fa fa-4x fa-flash wow bounceIn text-primary" data-wow-delay=".2s"></i>
+          <h3>Friend your Map!</h3>
+          <p class="text-muted">Find friends and look at their maps. Suggest games to them, let them suggest games for you. After all who knows you better than your friends...only our computers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock content %}
