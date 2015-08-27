@@ -11,6 +11,11 @@ def index(request):
     c = RequestContext(request, {})
     return HttpResponse(t.render(c))
 
+def login_load(request):
+    t = loader.get_template('login.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
+
 def login_view(request):
     username = request.POST['username']
     password = request.POST['password']

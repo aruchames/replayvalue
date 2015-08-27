@@ -2,34 +2,29 @@
 
 {% block content %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 text-center">
+      <div class="login-container">
+	<form class="form-signin" action="/login/" method="POST">
+	{% csrf_token %}
+	<span id="reauth-email" class="reauth-email"></span>
+	<input type="text" id="inputEmail" class="form-control" placeholder="Password" name="password" required>
+	<div id="remember" class="checkbox">
+	  <label>
+	    <input type-"checkbox" value="remember-me"> Remember me
+	  </label>
+	</div>
+	<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+	</form><!-- /form -->
+	<hr>
+	<!-- Currently does nix. Fix later -->
+	<p class="forgot-password">Forgot your password? Click <a href="#" class="forgot-password">here</a></p>
+	<p class="forgot-password">Need to register? Click <a href="/register/">here</a></p>
+	</div> <!-- /card-container -->
+    </div>
+  </div>
+</div>
 
-{% if next %}
-    {% if user.is_autenticated %}
-    <p> You account doesn't have access to this page. To Proceed, please login with an account that has access. </p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
 
-<form method="post" action="{% url
-'dhango.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-  <td> {{ form.username.label_tag}}</td>
-  <td>{{ form.username }}</td>
-</tr>
-<tr>
-  <td> {{ form.password.label_tag}}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-{% endblock %}
+{% endblock content %}
