@@ -8,17 +8,17 @@
   <div class="row">
     <div class="col-lg-4 col-lg-offset-4 text-center">
       <div class="login-container">
-	<form class="form-signin" action="/login/" method="POST">
+	<form class="form-signin" action="/login" method="POST">
 	{% csrf_token %}
 	<span id="reauth-email" class="reauth-email"></span>
-	<input type="text" id="inputEmail" class="form-control" placeholder="Email Address" name="email" required>
-	<input type="text" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+	<input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required>
+	<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
 	<button class="btn btn-lg btn-primary btn-signin" type="submit">Sign in</button>
 	</form><!-- /form -->
 	<hr>
 	<!-- Currently does nix. Fix later -->
 	<p class="forgot-password">Forgot your password? Click <a href="#" class="forgot-password">here</a></p>
-	<p class="forgot-password">Need to register? Click <a href="/register/">here</a></p>
+	<p class="forgot-password">Need to register? Click <a href="/register">here</a></p>
 	</div> <!-- /card-container -->
     </div>
   </div>
