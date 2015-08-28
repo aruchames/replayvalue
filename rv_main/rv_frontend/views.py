@@ -7,13 +7,24 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 
 import re
 
-# Create your views here.
-
+# Return a landing page if the user is not logged in, otherwise return the user to their map.
 def index(request):
-    t = loader.get_template('index.html')
-    c = RequestContext(request, {})
-    return HttpResponse(t.render(c))
+    if request.user.is_authenticated():
+        return redirect('map')
+    else:
+        t = loader.get_template('index.html')
+        c = RequestContext(request, {})
+        return HttpResponse(t.render(c))
 
+def map(request):
+    if request.user.is_authenticated():
+        t = loader.get_template('map.html')
+        c = RequestContext(request, {})
+        return HttpResponse(t.render(c)) 
+
+#### SIGN IN FUNCTIONS ####
+
+# If the request is a post perform the login operation, otherwise serve the login page.
 def login(request):
     
     if request.method == "POST":
@@ -22,7 +33,7 @@ def login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            print "FUK YES BITCCHES"
+
             if user.is_active:
                 auth_login(request, user)
                 t = loader.get_template('index.html')
@@ -33,7 +44,7 @@ def login(request):
                 c = RequestContext(request, {})
                 return HttpResponse(t.render(c))
         else:
-            print "oh no"
+
             t = loader.get_template('login_error.html')
             c = RequestContext(request, {})
             return HttpResponse(t.render(c))
@@ -43,6 +54,7 @@ def login(request):
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
 
+# If the request is a POST register a new user, otherwise serve the register page.
 def register(request):
     
     if request.method == "POST":
@@ -50,21 +62,18 @@ def register(request):
         username = request.POST['username']
         password = request.POST['password']
         email = request.POST['email']
-        emailpattern = '[^@]+@[^@]+\.[^@]+'
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         
+        emailpattern = '[^@]+@[^@]+\.[^@]+'
         
         if User.objects.filter(username=username).exists():
-            print "username"
             messages.add_message(request, messages.ERROR, "Username already exists.")
             return redirect("register")
         if User.objects.filter(email=email).exists():
-            print "email"
             messages.add_message(request, messages.ERROR, "Email address already associated with account.")
             return redirect("register")
         if re.match(emailpattern, email) is None:
-            print "FUCK ME HARDER"
             messages.add_message(request, messages.ERROR, "Bro, do you even email?")
             return redirect("register")
     
@@ -74,7 +83,7 @@ def register(request):
         return redirect("index")
                 
     else:
-        # yay
+
         t = loader.get_template('register.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
