@@ -36,9 +36,7 @@ def login(request):
 
             if user.is_active:
                 auth_login(request, user)
-                t = loader.get_template('index.html')
-                c = RequestContext(request, {})
-                return HttpResponse(t.render(c))
+                return redirect(map)
             else:
                 t = loader.get_template('banned.html')
                 c = RequestContext(request, {})
@@ -87,3 +85,8 @@ def register(request):
         t = loader.get_template('register.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
+
+def logout(request):
+        auth_logout(request)
+        return redirect('index')
+
