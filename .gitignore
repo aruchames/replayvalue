@@ -156,3 +156,4 @@ target/
 
 ## Database settings
 settings.py
+db.sqlite3
