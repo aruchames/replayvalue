@@ -21,7 +21,9 @@ def map(request):
         t = loader.get_template('map.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c)) 
-
+    else:
+        return redirect('login')
+        
 #### SIGN IN FUNCTIONS ####
 
 # If the request is a post perform the login operation, otherwise serve the login page.
@@ -86,7 +88,14 @@ def register(request):
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
 
+def friends(request):
+    
+    if request.user.is_authenticated():
+        t = loader.get_template('friends.html')
+        c = RequestContext(request, {})
+        return HttpResponse(t.render(c))
+    else:
+        return redirect('login')
 def logout(request):
-        auth_logout(request)
-        return redirect('index')
-
+    auth_logout(request)
+    return redirect('index')
