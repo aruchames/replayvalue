@@ -5,33 +5,38 @@
 <link href="/static/css/friends.css" rel="stylesheet">
 
 <div class="friends">
-  <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
+<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
   {{ user.username }}
 
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-md-offset-9">
-        <form action="" class="search-form">
+        <form method="GET" action="search_results" class="search-form">
           <div class="form-group has-feedback">
-	    <input type="text" class="form-control" name="search" id="search" placeholder="Find Friends. . .">
-	    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+	    <input type="text" class="srchbr" name="q" id="search" placeholder="Find Friends. . .">
+	    <input type="submit" id="srchbtn" value="Search!">  
 	  </div>
-        </form>
+	</form>
       </div>
     </div>
   </div>
-  3 friends
+  {{ Friendlist.len }}
+  {% if Friendlist.len == 1 %}
+      friend
+  {% else %}
+      friends
+  {% endif %}
 </div>
 
 
-<!--{% if friendlist.size == 0 %}
+{% if Friendlist.len == 0 %}
 
 <div class="col-md-4 col-md-offset-4">
  <center><h3><strong> You have no friends!</strong></h3>
  <p> Get friends to find people with similar gaming interests. Use the search bar above to get started.
    </p></center>
 </div>
-{% endif %} -->
+{% endif %}
 
 <div style="position: relative">
   

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -96,6 +96,18 @@ def friends(request):
         return HttpResponse(t.render(c))
     else:
         return redirect('login')
+
 def logout(request):
     auth_logout(request)
     return redirect('index')
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        # There was a query entered.
+        results = User.objects.filter(username=query)
+        print results.count()
+    else:
+        # If no query was entered, simply return to same page
+        return redirect('friends')
+    return render(request, 'search_results.html', {'results': results})

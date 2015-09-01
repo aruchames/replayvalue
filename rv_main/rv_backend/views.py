@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+# For search algorithm
+import re
+from django.db.models import Q
+
 import requests
 from django.conf import settings
 
@@ -50,4 +54,3 @@ def ApproveFriend(User1, User2):
 
     Friendlist.objects.get(user=User1).save()
     Friendlist.objects.get(user=User2).save()
-    

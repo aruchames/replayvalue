@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+{{ results.count }} friends found
+
+
+{% for friend in results %}
+ <div class="content visible-lg visible-md visible-sm friendContainer">
+    <div class="col-lg-6 col-md-6 col-sm-12 friend">
+      <span id="avatar">
+         <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-r\
+ight:10px;">
+      </span>
+      <span id="friendName">
+        {{ friend.username }}
+      </span>
+      <span id="mapLink" class="btn">
+        Map
+      </span>
+      <span id="friendListLink" class="btn">
+        Friends
+      </span>
+    </div>
+
+{% endfor %}
+{% endblock content %}
