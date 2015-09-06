@@ -68,6 +68,12 @@ def register(request):
         
         # Asssert validity of user
         emailpattern = '[^@]+@[^@]+\.[^@]+'        
+        # Asert password has at least one uppercase letter and one number
+        passpattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{4,24}$'
+        
+        if re.match(passpattern, password) is None:
+            messages.add_message(request, messages.ERROR, 
+                                 "Password must have at least one uppercase letter, lowercase letter and number.")
         if User.objects.filter(username=username).exists():
             messages.add_message(request, messages.ERROR, "Username already exists.")
             return redirect("register")
@@ -77,7 +83,7 @@ def register(request):
         if re.match(emailpattern, email) is None:
             messages.add_message(request, messages.ERROR, "Bro, do you even email?")
             return redirect("register")
-    
+        
         #Create user
         user = User.objects.create_user(username, email, password)
         private = False
@@ -118,11 +124,10 @@ def search(request):
     query = request.GET.get('q')
     if query:
         # There was a query entered.
-        results = User.objects.filter(username=query)
-        print results.count()
+        results = User.objects.filter(username__icontains=query)
     else:
-        # If no query was entered, simply return to same page
-        return redirect('friends')
+        # If no query was entered, return all users
+        results = User.objects.all()
     return render(request, 'search_results.html', {'results': results})
 
 def add_friend(request):

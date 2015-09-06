@@ -10,7 +10,8 @@ class Map(models.Model):
    pass 
 
 """
-Custom Manager for Friendlist
+Initializer for Friendlist objects. create_Friendlist takes a User, a boolean
+stating whether the list is private or not and the user's steamID
 """
 class FriendlistManager(models.Manager):
    def create_Friendlist(self, user, private, steamID):
@@ -21,20 +22,24 @@ class FriendlistManager(models.Manager):
 
 
 """
-The Friendlist model has an associated user id as well as an array of the id of each of the users friends. 
+The Friendlist model has an associated user, a set of friends, a boolean stating
+whether the Friendlist is private, which defaults to false. There is a set of 
+pendingFriends which are all the users who have friend requested you, there is
+also an associated steamID for looking up games to add to the Map. 
 """
 
 class Friendlist(models.Model):
    
-    user = models.ForeignKey(User, related_name="friendlist_set")
-    friends = models.ManyToManyField(User, related_name="friends_set")
-    private = models.BooleanField(default=False)
-    pendingFriends = models.ManyToManyField(User, related_name="pendingFriends_set")
-    steamID = models.CharField(max_length=30)
-    objects = FriendlistManager()
+   #Change to owner
+   user = models.ForeignKey(User, related_name="friendlist_set")
+   friends = models.ManyToManyField(User, related_name="friends_set")
+   private = models.BooleanField(default=False)
+   pendingFriends = models.ManyToManyField(User, related_name="pendingFriends_set")
+   steamID = models.CharField(max_length=30)
+   objects = FriendlistManager()
     
-    def __unicode__(self):
-        return self.user.username
+   def __unicode__(self):
+      return self.user.username
 
 
 """

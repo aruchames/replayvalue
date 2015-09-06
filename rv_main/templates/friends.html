@@ -11,6 +11,7 @@
       <div class="col-md-3">
 	<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
 	{{ user.username }}
+	{% block friends_content %}
 	<br>
 	{% if pendingfriends_cnt == 0 %}
 	You have no
@@ -26,7 +27,13 @@
 	{% endif %}
 	</a>
 	<br>
-	You have {{ friends_cnt }} friends
+	You have {{ friends_cnt }} 
+	{% if friends_cnt == 1 %}
+	friend
+	{% else %}
+	friends
+	{% endif %}
+	{% endblock friends_content %}
       </div>
       <div class="col-md-3 col-md-offset-6">
 	<form method="GET" action="search_results" class="search-form">

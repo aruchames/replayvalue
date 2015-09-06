@@ -1,23 +1,30 @@
-{% extends "base.html" %}
+{% extends "friends.html" %}
 {% load staticfiles %}
 
-{% block content %}
-{{ results.count }} friends found
-<link href="/static/css/friends.css" rel="stylesheet">
+{% block friends_content %}
+{% endblock friends_content %}
+{{ results.count }} 
+{% if results.count == 1 %}
+user found
+{% else %}
+users found
+{% endif %}
 
+{% block owncontent %}
 {% for searched_user in results %}
 <div class="content visible-lg visible-md visible-sm visible-xs friendContainer">
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
-         <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-r
-ight:10px;">
+        <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png 
+	     class="alignleft" style="width:45px;height:45px;margin-right:10px;">
       </span>
       <span id="friendName">
         {{ searched_user.username }}
       </span>
       <a style="float:right;color:green;" class="glyphicon glyphicon-plus btn" id="addFriend" href="/add_friend/{{ searched_user.username }}" >
-	</a>
+      </a>
     </div>
+</div>
 
 {% endfor %}
-{% endblock content %}
+{% endblock owncontent %}
