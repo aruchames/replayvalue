@@ -13,8 +13,8 @@ class Map(models.Model):
 Custom Manager for Friendlist
 """
 class FriendlistManager(models.Manager):
-   def create_Friendlist(self, user, private):
-      Friendlist = self.create(user=user, private=private)
+   def create_Friendlist(self, user, private, steamID):
+      Friendlist = self.create(user=user, private=private, steamID=steamID)
       
       return Friendlist
 
@@ -30,6 +30,7 @@ class Friendlist(models.Model):
     friends = models.ManyToManyField(User, related_name="friends_set")
     private = models.BooleanField(default=False)
     pendingFriends = models.ManyToManyField(User, related_name="pendingFriends_set")
+    steamID = models.CharField(max_length=30)
     objects = FriendlistManager()
     
     def __unicode__(self):
