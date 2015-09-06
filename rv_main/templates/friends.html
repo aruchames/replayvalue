@@ -51,10 +51,8 @@
 {% endif %}
 
 <div class="container">
+{% for friend in friends %}
   <div class="content visible-lg visible-md visible-sm friendContainer">
-    {% for friend in friends %}
-    {% if friend.username == user.username %}
-    {% else %}
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
 	 <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
@@ -62,17 +60,17 @@
       <span id="friendName">
 	{{ friend.username }}
       </span>
-      <span id="mapLink" class="btn">
+      <a href="remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
+      <a href="map/{{friend.username" id="mapLink" class="btn">
 	Map
-      </span>
-      <span id="friendListLink" class="btn">
+      </a>
+      <a href="friends/{{friend.username}}" id="friendListLink" class="btn">
 	Friends
-      </span>
+      </a>
     </div>    
   </div>
-  {% endif %}
-  {% endfor %}
-
+{% endfor %}
+  
   {% for friend in friends %}
   {% if friend.username == user.username %}
   {% else %}
@@ -84,11 +82,10 @@
       <span id="friendName">
 	{{ friend.username }}
       </span>
-      <span id="mapLink" class="btn">
-	Map
+      <a href="remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
+      <a href="/map/{{friend.username}}" id="smallmapLink" class="glyphicon glyphicon-map-marker red"></a>
       </span>
-      <span id="friendListLink" class="btn">
-	Friends
+      <a href="/friends/{{friend.username}}" id="smallfriendListLink" class="glyphicon glyphicon-ok-circle blue"></a>
       </span>
     </div>    
     {% endif %}

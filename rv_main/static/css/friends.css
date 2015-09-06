@@ -18,11 +18,24 @@
     float: right;
     background-color:red;
     margin: 5px;
+    color:white;
 }
 
 #friendListLink {
     float: right;
     background-color: blue;
+    margin: 5px;
+    color:white;
+}
+.red{
+    float: right;
+    color:red;
+    margin: 5px;
+}
+
+.blue {
+    float: right;
+    color: blue;
     margin: 5px;
 }
 

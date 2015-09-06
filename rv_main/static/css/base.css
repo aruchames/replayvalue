@@ -12,3 +12,8 @@ body{
     background-color:#4C0000;
     color:#FFFFFF;
 }
+
+.intro{
+    position: relative;
+    margin: 50px; !important
+}

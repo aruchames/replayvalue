@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from rv_backend.views import AddFriend, ApproveFriend
+from rv_backend.views import AddFriend, ApproveFriend, RemoveFriend
 from rv_backend.models import Friendlist, FriendlistManager
 
 import re
@@ -67,8 +67,8 @@ def register(request):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         
-        emailpattern = '[^@]+@[^@]+\.[^@]+'
-        
+        # Asssert validity of user
+        emailpattern = '[^@]+@[^@]+\.[^@]+'        
         if User.objects.filter(username=username).exists():
             messages.add_message(request, messages.ERROR, "Username already exists.")
             return redirect("register")
@@ -79,14 +79,15 @@ def register(request):
             messages.add_message(request, messages.ERROR, "Bro, do you even email?")
             return redirect("register")
     
+        #Create user
         user = User.objects.create_user(username, email, password)
-        user.first_name = first_name
-        user.last_name = last_name
         private = False
-        # Create an associated Friendlist at user registration
+        
+        #Create an associated Friendlist at user registration
         new_friendlist = Friendlist.objects.create_Friendlist(user, private)
         new_friendlist.save()
         
+        #Log the user into the website
         user = authenticate(username=request.POST['username'],
                             password=request.POST['password'])
         auth_login(request, user)
@@ -151,5 +152,14 @@ def approve_friend(request):
     approver = User.objects.get(username=request.user.username)
     
     ApproveFriend(approver, requester)
+    
+    return redirect(friends)
+
+def remove_friend(request):
+    
+    deleted = User.objects.get(username=request.path.split('/')[-1])
+    deleter = User.objects.get(username=request.user.username)
+
+    RemoveFriend(deleter, deleted)
     
     return redirect(friends)
