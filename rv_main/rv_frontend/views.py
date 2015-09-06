@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from rv_backend.views import AddFriend
+from rv_backend.views import AddFriend, ApproveFriend
 from rv_backend.models import Friendlist, FriendlistManager
 
 import re
@@ -130,5 +130,26 @@ def add_friend(request):
     user = User.objects.get(username=request.user.username)
     
     AddFriend(user, friend)
+    
+    return redirect(friends)
+
+def friend_requests(request):
+
+    if request.user.is_authenticated():
+        t = loader.get_template('approve_friends.html')
+        c = RequestContext(request, {'pendingfriends_cnt':request.user.friendlist_set.get().pendingFriends.all().count(),
+                                     'pending_friends':request.user.friendlist_set.get().pendingFriends.all(),
+                                     'friends':request.user.friendlist_set.get().friends.all(),
+                                     'friends_cnt':request.user.friendlist_set.get().friends.all().count()})
+        return HttpResponse(t.render(c))
+    else:
+        return redirect('login')
+
+def approve_friend(request):
+    
+    requester = User.objects.get(username=request.path.split('/')[-1])
+    approver = User.objects.get(username=request.user.username)
+    
+    ApproveFriend(approver, requester)
     
     return redirect(friends)

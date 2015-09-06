@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
+
 <link href="/static/css/friends.css" rel="stylesheet">
 
 <div class="friends">
@@ -13,21 +14,19 @@
 	<br>
 	{% if pendingfriends_cnt == 0 %}
 	You have no
-	
 	{% else %}
 	You have
-	<a href="/approve_friends/">
+	<a href="/friend_requests">
 	{{ pendingfriends_cnt }} 
-	
 	{% endif %}
-	
+	{% if pendingfriends_cnt == 1%}
 	friend request
-	
-	{% if pendingfriends_cnt != 1 %}
-	s
-	
+	{% else %}
+	friend requests
 	{% endif %}
 	</a>
+	<br>
+	You have {{ friends_cnt }} friends
       </div>
       <div class="col-md-3 col-md-offset-6">
 	<form method="GET" action="search_results" class="search-form">
@@ -41,6 +40,7 @@
   </div>
 </div>
 
+{% block owncontent %}
 {% if friends_cnt == 0 %}
 
 <div class="col-md-4 col-md-offset-4">
@@ -50,9 +50,11 @@
 </div>
 {% endif %}
 
-<div style="position: relative">
+<div class="container">
   <div class="content visible-lg visible-md visible-sm friendContainer">
     {% for friend in friends %}
+    {% if friend.username == user.username %}
+    {% else %}
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
 	 <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
@@ -68,9 +70,13 @@
       </span>
     </div>    
   </div>
+  {% endif %}
   {% endfor %}
+
+  {% for friend in friends %}
+  {% if friend.username == user.username %}
+  {% else %}
   <div class="content visible-xs" style="padding-bottom:2em">
-    {% for friend in friends %}
     <div class="col-lg-1 col-centered friend">
       <span id="avatar">
 	<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
@@ -85,12 +91,9 @@
 	Friends
       </span>
     </div>    
+    {% endif %}
     {% endfor %}
   </div>
 </div>
-
-
-
-
-
+{% endblock owncontent %}
 {% endblock content %}

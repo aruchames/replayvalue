@@ -5,17 +5,17 @@
 {{ results.count }} friends found
 <link href="/static/css/friends.css" rel="stylesheet">
 
-{% for user in results %}
- <div class="content visible-lg visible-md visible-sm visible-xs friendContainer">
+{% for searched_user in results %}
+<div class="content visible-lg visible-md visible-sm visible-xs friendContainer">
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
-         <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-r\
+         <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-r
 ight:10px;">
       </span>
       <span id="friendName">
-        {{ user.username }}
+        {{ searched_user.username }}
       </span>
-      <a style="float:right;color:green;" class="glyphicon glyphicon-plus btn" id="addFriend" href="/add_friend/{{ user.username }}" >
+      <a style="float:right;color:green;" class="glyphicon glyphicon-plus btn" id="addFriend" href="/add_friend/{{ searched_user.username }}" >
 	</a>
     </div>
 

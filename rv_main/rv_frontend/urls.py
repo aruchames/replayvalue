@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^friends$', views.friends, name='friends'),
     url(r'^search_results$', views.search, name="search"),
     url(r'^add_friend/*', views.add_friend, name="addFriend"),
+    url(r'^approve_friend/*', views.approve_friend, name="approveFriend"),
+    url(r'^friend_requests$', views.friend_requests, name="friendRequests")
 
 ]

@@ -36,26 +36,19 @@ def get_pendinglist(User):
 # Add a game to the map of a user, this method will contain much calculation
 
 def AddFriend(User1, User2):
-    list1 = get_pendinglist(User1)
     list2 = get_pendinglist(User2)
-    list1.add(User2)
     list2.add(User1)
-    Friendlist.objects.get(user=User1).save()
     Friendlist.objects.get(user=User2).save()
-    print User1.username+ " wants to be friends with "+ User2.username
-    print list1.all()
-    print list2.all()
 
-def ApproveFriend(User1, User2):
-    list1 = get_pendinglist(User1)
-    list2 = get_pendinglist(User2)
-    list1.remove(User2)
-    list2.remove(User1)
-    
-    list1 = get_list(User1)
-    list2 = get_list(User2)
-    list1.add(User2)
-    list2.add(User1)
 
-    Friendlist.objects.get(user=User1).save()
-    Friendlist.objects.get(user=User2).save()
+def ApproveFriend(Approver, Requester):
+    list1 = get_pendinglist(Approver)
+    list1.remove(Requester)
+
+    list1 = get_list(Approver)
+    list2 = get_list(Requester)
+    list1.add(Requester)
+    list2.add(Approver)
+
+    Friendlist.objects.get(user=Approver).save()
+    Friendlist.objects.get(user=Requester).save()
