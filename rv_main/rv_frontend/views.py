@@ -64,8 +64,7 @@ def register(request):
         username = request.POST['username']
         password = request.POST['password']
         email = request.POST['email']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        steamID = request.POST['steamID']
         
         # Asssert validity of user
         emailpattern = '[^@]+@[^@]+\.[^@]+'        
@@ -84,7 +83,7 @@ def register(request):
         private = False
         
         #Create an associated Friendlist at user registration
-        new_friendlist = Friendlist.objects.create_Friendlist(user, private)
+        new_friendlist = Friendlist.objects.create_Friendlist(user, private, steamID)
         new_friendlist.save()
         
         #Log the user into the website
