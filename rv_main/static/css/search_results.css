@@ -1,0 +1,51 @@
+.friends {
+    position: relative;
+    right: -18px;
+}
+
+.friend {
+    background-color: #252525;
+    padding: 5px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #000000;
+}
+
+.friendContainer {
+    padding: 10px;
+}
+
+#mapLink{
+    float: right;
+    background-color:red;
+    margin: 5px;
+}
+
+#friendListLink {
+    float: right;
+    background-color: blue;
+    margin: 5px;
+}
+
+.srchbr {
+    display: block;
+    float: left;
+    height: 32px;
+    width: 180px;
+    margin: 3px;
+}
+
+#srchbtn {
+    color: #000000;
+    display: block;
+    float: left;
+    height: 32px;
+    margin: 3px;
+    width: 70px;
+}
+
+#addfriend {
+   background-color: green;
+   float: right;
+   margin: 5px;
+}
