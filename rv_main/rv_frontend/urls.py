@@ -1,4 +1,3 @@
-
 from django.conf.urls import patterns, url
 from .  import views
 
@@ -10,4 +9,6 @@ urlpatterns = [
     url(r'^logout$', views.logout, name='logout'),
     url(r'^friends$', views.friends, name='friends'),
     url(r'^search_results$', views.search, name="search"),
+    url(r'^add_friend/*', views.add_friend, name="addFriend"),
+
 ]

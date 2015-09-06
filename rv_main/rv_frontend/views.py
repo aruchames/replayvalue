@@ -4,6 +4,8 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from rv_backend.views import AddFriend
+from rv_backend.models import Friendlist, FriendlistManager
 
 import re
 
@@ -80,6 +82,14 @@ def register(request):
         user = User.objects.create_user(username, email, password)
         user.first_name = first_name
         user.last_name = last_name
+        private = False
+        # Create an associated Friendlist at user registration
+        new_friendlist = Friendlist.objects.create_Friendlist(user, private)
+        new_friendlist.save()
+        
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
+        auth_login(request, user)
         return redirect("index")
                 
     else:
@@ -92,7 +102,10 @@ def friends(request):
     
     if request.user.is_authenticated():
         t = loader.get_template('friends.html')
-        c = RequestContext(request, {})
+        c = RequestContext(request, {'pendingfriends_cnt':request.user.friendlist_set.get().pendingFriends.all().count(),
+                                     'pending_friends':request.user.friendlist_set.get().pendingFriends.all(),
+                                     'friends':request.user.friendlist_set.get().friends.all(),
+                                     'friends_cnt':request.user.friendlist_set.get().friends.all().count()})
         return HttpResponse(t.render(c))
     else:
         return redirect('login')
@@ -111,3 +124,11 @@ def search(request):
         # If no query was entered, simply return to same page
         return redirect('friends')
     return render(request, 'search_results.html', {'results': results})
+
+def add_friend(request):
+    friend = User.objects.get(username=request.path.split('/')[-1])
+    user = User.objects.get(username=request.user.username)
+    
+    AddFriend(user, friend)
+    
+    return redirect(friends)

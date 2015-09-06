@@ -5,14 +5,33 @@
 <link href="/static/css/friends.css" rel="stylesheet">
 
 <div class="friends">
-<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
-  {{ user.username }}
-
   <div class="container">
     <div class="row">
-      <div class="col-md-3 col-md-offset-9">
-        <form method="GET" action="search_results" class="search-form">
-          <div class="form-group has-feedback">
+      <div class="col-md-3">
+	<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
+	{{ user.username }}
+	<br>
+	{% if pendingfriends_cnt == 0 %}
+	You have no
+	
+	{% else %}
+	You have
+	<a href="/approve_friends/">
+	{{ pendingfriends_cnt }} 
+	
+	{% endif %}
+	
+	friend request
+	
+	{% if pendingfriends_cnt != 1 %}
+	s
+	
+	{% endif %}
+	</a>
+      </div>
+      <div class="col-md-3 col-md-offset-6">
+	<form method="GET" action="search_results" class="search-form">
+	  <div class="form-group has-feedback">
 	    <input type="text" class="srchbr" name="q" id="search" placeholder="Find Friends. . .">
 	    <input type="submit" id="srchbtn" value="Search!">  
 	  </div>
@@ -20,16 +39,9 @@
       </div>
     </div>
   </div>
-  {{ Friendlist.len }}
-  {% if Friendlist.len == 1 %}
-      friend
-  {% else %}
-      friends
-  {% endif %}
 </div>
 
-
-{% if Friendlist.len == 0 %}
+{% if friends_cnt == 0 %}
 
 <div class="col-md-4 col-md-offset-4">
  <center><h3><strong> You have no friends!</strong></h3>
@@ -39,14 +51,14 @@
 {% endif %}
 
 <div style="position: relative">
-  
   <div class="content visible-lg visible-md visible-sm friendContainer">
+    {% for friend in friends %}
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
 	 <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
       </span>
       <span id="friendName">
-	Friend 1<!--{{ friend.username }}-->
+	{{ friend.username }}
       </span>
       <span id="mapLink" class="btn">
 	Map
@@ -54,42 +66,26 @@
       <span id="friendListLink" class="btn">
 	Friends
       </span>
-    </div>  
-    
-    <div class="col-lg-6 col-md-6 col-sm-12 friend">
-      <span id="avatar">
-	 <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
-      </span>
-      <span id="friendName">
-	Friend 2<!--{{ friend.username }}-->
-      </span>
-      <span id="mapLink" class="btn">
-	Map
-      </span>
-      <span id="friendListLink" class="btn">
-	Friends
-      </span>
-    </div>  <div class="col-lg-6 col-md-6 col-sm-12 friend">
-      <span id="avatar">
-	 <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
-      </span>
-      <span id="friendName">
-	Friend 3<!--{{ friend.username }}-->
-      </span>
-      <span id="mapLink" class="btn">
-	Map
-      </span>
-      <span id="friendListLink" class="btn">
-	Friends
-      </span>
-    </div>
+    </div>    
   </div>
-
+  {% endfor %}
   <div class="content visible-xs" style="padding-bottom:2em">
-    <div class="col-lg-1 col-centered">
-      <div class="stack">
-      </div>
-    </div>
+    {% for friend in friends %}
+    <div class="col-lg-1 col-centered friend">
+      <span id="avatar">
+	<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
+      </span>
+      <span id="friendName">
+	{{ friend.username }}
+      </span>
+      <span id="mapLink" class="btn">
+	Map
+      </span>
+      <span id="friendListLink" class="btn">
+	Friends
+      </span>
+    </div>    
+    {% endfor %}
   </div>
 </div>
 
