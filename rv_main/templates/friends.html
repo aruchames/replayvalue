@@ -10,7 +10,13 @@
     <div class="row">
       <div class="col-md-3">
 	<img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png class="alignleft" style="width:45px;height:45px;margin-right:10px;">
+	{% if not other  %}
+	<a href="/friends">
 	{{ user.username }}
+	</a>
+	{% else %}
+	{{ user.username }}
+	{% endif %}
 	{% block friends_content %}
 	<br>
 	{% if pendingfriends_cnt == 0 %}
@@ -36,7 +42,7 @@
 	{% endblock friends_content %}
       </div>
       <div class="col-md-3 col-md-offset-6">
-	<form method="GET" action="search_results" class="search-form">
+	<form method="GET" action="/search_results" class="search-form">
 	  <div class="form-group has-feedback">
 	    <input type="text" class="srchbr" name="q" id="search" placeholder="Find Friends. . .">
 	    <input type="submit" id="srchbtn" value="Search!">  
@@ -67,20 +73,17 @@
       <span id="friendName">
 	{{ friend.username }}
       </span>
-      <a href="remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
-      <a href="map/{{friend.username" id="mapLink" class="btn">
+      <a href="/remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
+      <a href="/map/{{friend.username}}" id="mapLink" class="btn">
 	Map
       </a>
-      <a href="friends/{{friend.username}}" id="friendListLink" class="btn">
+      <a href="/friends/{{friend.username}}" id="friendListLink" class="btn">
 	Friends
       </a>
     </div>    
   </div>
-{% endfor %}
-  
+  {% endfor %}
   {% for friend in friends %}
-  {% if friend.username == user.username %}
-  {% else %}
   <div class="content visible-xs" style="padding-bottom:2em">
     <div class="col-lg-1 col-centered friend">
       <span id="avatar">
@@ -89,13 +92,12 @@
       <span id="friendName">
 	{{ friend.username }}
       </span>
-      <a href="remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
+      <a href="/remove_friend/{{friend.username}}" style="color:red; margin-left:10px">X</a>
       <a href="/map/{{friend.username}}" id="smallmapLink" class="glyphicon glyphicon-map-marker red"></a>
       </span>
       <a href="/friends/{{friend.username}}" id="smallfriendListLink" class="glyphicon glyphicon-ok-circle blue"></a>
       </span>
     </div>    
-    {% endif %}
     {% endfor %}
   </div>
 </div>

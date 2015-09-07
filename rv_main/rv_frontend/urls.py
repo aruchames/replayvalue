@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^approve_friend/*', views.approve_friend, name="approveFriend"),
     url(r'^friend_requests$', views.friend_requests, name="friendRequests"),
     url(r'^remove_friend/*', views.remove_friend, name="removeFriend"),
-
+    url(r'^friends/*', views.otherFriends, name="otherFriends"),
 ]

@@ -11,8 +11,18 @@ users found
 {% endif %}
 
 {% block owncontent %}
-{% for searched_user in results %}
-<div class="content visible-lg visible-md visible-sm visible-xs friendContainer">
+
+{% if results.count == 0 %}
+<div class="col-md-4 col-md-offset-4">
+ <center><h3><strong>Looks like they're not on here yet...</strong></h3>
+ <p> But they should be! Tell them to get on Replay Value today so they can see all the games that they never knew they wanted to play
+   </p></center>
+</div>
+{% endif %}
+<div class="container">
+  
+  {% for searched_user in results %}
+  <div class="content visible-lg visible-md visible-sm friendContainer">
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
         <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png 
@@ -24,7 +34,23 @@ users found
       <a style="float:right;color:green;" class="glyphicon glyphicon-plus btn" id="addFriend" href="/add_friend/{{ searched_user.username }}" >
       </a>
     </div>
+  </div>
+  {% endfor %}
+  
+  {% for searched_user in results %}
+  <div class="content visible-xs" style="padding-bottom:2em">
+    <div class="col-lg-1 col-centered friend">
+      <span id="avatar">
+        <img src=https://pbs.twimg.com/profile_images/3742547688/b8c07bc4fd9a92335e3381d4cc2cef38_400x400.png 
+	     class="alignleft" style="width:45px;height:45px;margin-right:10px;">
+      </span>
+      <span id="friendName">
+        {{ searched_user.username }}
+      </span>
+      <a style="float:right;color:green;" class="glyphicon glyphicon-plus btn" id="addFriend" href="/add_friend/{{ searched_user.username }}" >
+      </a>
+    </div>
+    {% endfor %}
+  </div>
 </div>
-
-{% endfor %}
 {% endblock owncontent %}

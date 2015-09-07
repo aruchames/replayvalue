@@ -31,6 +31,16 @@ def get_pendinglist(User):
         return Friendlist.objects.get(user=User).pendingFriends
     except Friendlist.DoesNotExist:
         raise Http404
+
+def areFriends(user1, user2):
+    if user1 is not user2:
+        list1 = get_list(user1)
+        list2 = get_list(user2)
+        
+        if list1.filter(username=user2).exists() and list2.filter(username=user1).exists():
+            return True
+        else:
+            return False
 ###############################################################################
 
 # Add a game to the map of a user, this method will contain much calculation
@@ -38,8 +48,12 @@ def get_pendinglist(User):
 def AddFriend(User1, User2):
     if User1 is not User2:
         list2 = get_pendinglist(User2)
-        list2.add(User1)
-        Friendlist.objects.get(user=User2).save()
+        list1 = get_pendinglist(User1)
+        if list1.filter(username=User2).exists():
+            ApproveFriend(User1, User2)
+        else:
+            list2.add(User1)
+            Friendlist.objects.get(user=User2).save()
     else:
         pass
 
