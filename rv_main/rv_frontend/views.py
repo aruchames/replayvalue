@@ -22,17 +22,17 @@ def map(request):
     if request.user.is_authenticated():
         t = loader.get_template('map.html')
         c = RequestContext(request, {})
-        return HttpResponse(t.render(c)) 
+        return HttpResponse(t.render(c))
     else:
         return redirect('login')
-        
+
 #### SIGN IN FUNCTIONS ####
 
 # If the request is a post perform the login operation, otherwise serve the login page.
 def login(request):
-    
+
     if request.method == "POST":
-    
+
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
@@ -47,32 +47,32 @@ def login(request):
                 return HttpResponse(t.render(c))
         else:
 
-            t = loader.get_template('login_error.html')
-            c = RequestContext(request, {})
+            t = loader.get_template('login.html')
+            c = RequestContext(request, {'error':"We did not recognize the user or password"})
             return HttpResponse(t.render(c))
     else:
-        
+
         t = loader.get_template('login.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
 
 # If the request is a POST register a new user, otherwise serve the register page.
 def register(request):
-    
+
     if request.method == "POST":
-        
+
         username = request.POST['username']
         password = request.POST['password']
         email = request.POST['email']
         steamID = request.POST['steamID']
-        
+
         # Asssert validity of user
-        emailpattern = '[^@]+@[^@]+\.[^@]+'        
+        emailpattern = '[^@]+@[^@]+\.[^@]+'
         # Asert password has at least one uppercase letter and one number
         passpattern = '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{4,24}$'
-        
+
         if re.match(passpattern, password) is None:
-            messages.add_message(request, messages.ERROR, 
+            messages.add_message(request, messages.ERROR,
                                  "Password must have at least one uppercase letter, lowercase letter and number.")
         if User.objects.filter(username=username).exists():
             messages.add_message(request, messages.ERROR, "Username already exists.")
@@ -83,21 +83,21 @@ def register(request):
         if re.match(emailpattern, email) is None:
             messages.add_message(request, messages.ERROR, "Bro, do you even email?")
             return redirect("register")
-        
+
         #Create user
         user = User.objects.create_user(username, email, password)
         private = False
-        
+
         #Create an associated Friendlist at user registration
         new_friendlist = Friendlist.objects.create_Friendlist(user, private, steamID)
         new_friendlist.save()
-        
+
         #Log the user into the website
         user = authenticate(username=request.POST['username'],
                             password=request.POST['password'])
         auth_login(request, user)
         return redirect("index")
-                
+
     else:
 
         t = loader.get_template('register.html')
@@ -105,7 +105,7 @@ def register(request):
         return HttpResponse(t.render(c))
 
 def friends(request):
-    
+
     if request.user.is_authenticated():
         t = loader.get_template('friends.html')
         c = RequestContext(request, {'pendingfriends_cnt':request.user.friendlist_set.get().pendingFriends.all().count(),
@@ -132,7 +132,7 @@ def otherFriends(request):
         return redirect('friends')
     else:
         return redirect('index')
-        
+
 
 def logout(request):
     auth_logout(request)
@@ -146,14 +146,16 @@ def search(request):
     else:
         # If no query was entered, return all users
         results = User.objects.all()
+    results.exclude(username=request.user.username)
+
     return render(request, 'search_results.html', {'results': results})
 
 def add_friend(request):
     friend = User.objects.get(username=request.path.split('/')[-1])
     user = User.objects.get(username=request.user.username)
-    
+
     AddFriend(user, friend)
-    
+
     return redirect(friends)
 
 def friend_requests(request):
@@ -169,19 +171,19 @@ def friend_requests(request):
         return redirect('login')
 
 def approve_friend(request):
-    
+
     requester = User.objects.get(username=request.path.split('/')[-1])
     approver = User.objects.get(username=request.user.username)
-    
+
     ApproveFriend(approver, requester)
-    
+
     return redirect(friends)
 
 def remove_friend(request):
-    
+
     deleted = User.objects.get(username=request.path.split('/')[-1])
     deleter = User.objects.get(username=request.user.username)
 
     RemoveFriend(deleter, deleted)
-    
+
     return redirect(friends)

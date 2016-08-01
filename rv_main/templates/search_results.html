@@ -12,16 +12,19 @@ users found
 
 {% block owncontent %}
 
-{% if results.count == 0 %}
+{% if results.count == 0 or results.count == 1%}
 <div class="col-md-4 col-md-offset-4">
  <center><h3><strong>Looks like they're not on here yet...</strong></h3>
  <p> But they should be! Tell them to get on Replay Value today so they can see all the games that they never knew they wanted to play
    </p></center>
-</div>
+</div> 
 {% endif %}
 <div class="container">
   
   {% for searched_user in results %}
+  {% if searched_user == user %}
+  
+  {% else %}
   <div class="content visible-lg visible-md visible-sm friendContainer">
     <div class="col-lg-6 col-md-6 col-sm-12 friend">
       <span id="avatar">
@@ -35,6 +38,7 @@ users found
       </a>
     </div>
   </div>
+  {% endif %}
   {% endfor %}
   
   {% for searched_user in results %}
